@@ -1073,7 +1073,11 @@ void setup() {
     delay(800);   // Required delay (since boot?)
     SERIAL_ECHOPGM("\nDWIN handshake ");
     if (DWIN_Handshake()) SERIAL_ECHOLNPGM("ok."); else SERIAL_ECHOLNPGM("error.");
+	#if ENABLED(VOXELAB_AQUILA)
+	DWIN_Frame_SetDir(0); // Orientation 0°
+	#else
     DWIN_Frame_SetDir(1); // Orientation 90°
+	#endif
     DWIN_UpdateLCD();     // Show bootscreen (first image)
   #else
     SETUP_RUN(ui.init());

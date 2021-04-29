@@ -42,10 +42,13 @@
 
 // Make sure DWIN_SendBuf is large enough to hold the largest string plus draw command and tail.
 // Assume the narrowest (6 pixel) font and 2-byte gb2312-encoded characters.
-uint8_t DWIN_SendBuf[11 + DWIN_WIDTH / 6 * 2] = { 0xAA };
+uint8_t DWIN_SendBuf[11 + DWIN_DEFAULT_HEIGHT / 6 * 2] = { 0xAA };
 uint8_t DWIN_BufTail[4] = { 0xCC, 0x33, 0xC3, 0x3C };
 uint8_t databuf[26] = { 0 };
 uint8_t receivedType;
+
+int16_t DWIN_Width = DWIN_DEFAULT_WIDTH;
+int16_t DWIN_Height = DWIN_DEFAULT_HEIGHT;
 
 int recnum = 0;
 
@@ -133,6 +136,14 @@ void DWIN_Frame_SetDir(uint8_t dir) {
   DWIN_Byte(i, 0xA5);
   DWIN_Byte(i, dir);
   DWIN_Send(i);
+  if (dir == 1 || dir == 3) {
+    DWIN_Width = DWIN_DEFAULT_WIDTH;
+	DWIN_Height = DWIN_DEFAULT_HEIGHT;
+  }
+  else if (dir == 0 || dir == 2) {
+    DWIN_Height = DWIN_DEFAULT_WIDTH;
+	DWIN_Width = DWIN_DEFAULT_HEIGHT;
+  }
 }
 
 // Update display
@@ -342,8 +353,8 @@ void DWIN_JPG_ShowAndCache(const uint8_t id) {
 //  picID: Icon ID
 //  x/y: Upper-left point
 void DWIN_ICON_Show(uint8_t libID, uint8_t picID, uint16_t x, uint16_t y) {
-  NOMORE(x, DWIN_WIDTH - 1);
-  NOMORE(y, DWIN_HEIGHT - 1); // -- ozy -- srl
+  NOMORE(x, DWIN_Width - 1);
+  NOMORE(y, DWIN_Height - 1); // -- ozy -- srl
   size_t i = 0;
   DWIN_Byte(i, 0x23);
   DWIN_Word(i, x);
@@ -392,8 +403,8 @@ void DWIN_Frame_AreaCopy(uint8_t cacheID, uint16_t xStart, uint16_t yStart,
 //  x/y: Upper-left point
 //  interval: Display time interval, unit 10mS
 void DWIN_ICON_Animation(uint8_t animID, bool animate, uint8_t libID, uint8_t picIDs, uint8_t picIDe, uint16_t x, uint16_t y, uint16_t interval) {
-  NOMORE(x, DWIN_WIDTH - 1);
-  NOMORE(y, DWIN_HEIGHT - 1); // -- ozy -- srl
+  NOMORE(x, DWIN_Width - 1);
+  NOMORE(y, DWIN_Height - 1); // -- ozy -- srl
   size_t i = 0;
   DWIN_Byte(i, 0x28);
   DWIN_Word(i, x);

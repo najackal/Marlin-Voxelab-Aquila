@@ -39,8 +39,11 @@
 #define DWIN_SCROLL_UP   2
 #define DWIN_SCROLL_DOWN 3
 
-#define DWIN_WIDTH  272
-#define DWIN_HEIGHT 480
+#define DWIN_DEFAULT_WIDTH  272
+#define DWIN_DEFAULT_HEIGHT 480
+
+extern int16_t DWIN_Width;
+extern int16_t DWIN_Height;
 
 /*-------------------------------------- System variable function --------------------------------------*/
 

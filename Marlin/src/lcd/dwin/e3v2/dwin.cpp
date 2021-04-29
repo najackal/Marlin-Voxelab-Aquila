@@ -402,7 +402,7 @@ void ICON_Stop() {
 }
 
 inline void Clear_Title_Bar() {
-  DWIN_Draw_Rectangle(1, Color_Bg_Blue, 0, 0, DWIN_WIDTH, 30);
+  DWIN_Draw_Rectangle(1, Color_Bg_Blue, 0, 0, DWIN_Width, 30);
 }
 
 inline void Draw_Title(const char * const title) {
@@ -414,7 +414,7 @@ inline void Draw_Title(const __FlashStringHelper * title) {
 }
 
 inline void Clear_Menu_Area() {
-  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_WIDTH, STATUS_Y);
+  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_Width, STATUS_Y);
 }
 
 inline void Clear_Main_Window() {
@@ -424,7 +424,7 @@ inline void Clear_Main_Window() {
 
 inline void Clear_Popup_Area() {
   Clear_Title_Bar();
-  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_WIDTH, DWIN_HEIGHT);
+  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 31, DWIN_Width, DWIN_Height);
 }
 
 void Draw_Popup_Bkgd_105() {
@@ -455,7 +455,7 @@ inline void Add_Menu_Line() {
 }
 
 inline void Scroll_Menu(const uint8_t dir) {
-  DWIN_Frame_AreaMove(1, dir, MLINE, Color_Bg_Black, 0, 31, DWIN_WIDTH, 349);
+  DWIN_Frame_AreaMove(1, dir, MLINE, Color_Bg_Black, 0, 31, DWIN_Width, 349);
   switch (dir) {
     case DWIN_SCROLL_DOWN: Move_Highlight(-1, 0); break;
     case DWIN_SCROLL_UP:   Add_Menu_Line(); break;
@@ -1110,7 +1110,7 @@ void Goto_PrintProcess() {
 
   // Copy into filebuf string before entry
   char * const name = card.longest_filename();
-  const int8_t npos = _MAX(0U, DWIN_WIDTH - strlen(name) * MENU_CHR_W) / 2;
+  const int8_t npos = _MAX(0U, DWIN_Width - strlen(name) * MENU_CHR_W) / 2;
   DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, npos, 60, name);
 
   DWIN_ICON_Show(ICON, ICON_PrintTime, 17, 193);
@@ -1761,8 +1761,8 @@ inline void Redraw_SD_List() {
     TERN_(SCROLL_LONG_FILENAMES, Init_SDItem_Shift());
   }
   else {
-    DWIN_Draw_Rectangle(1, Color_Bg_Red, 10, MBASE(3) - 10, DWIN_WIDTH - 10, MBASE(4));
-    DWIN_Draw_String(false, false, font16x32, Color_Yellow, Color_Bg_Red, ((DWIN_WIDTH) - 8 * 16) / 2, MBASE(3), F("No Media"));
+    DWIN_Draw_Rectangle(1, Color_Bg_Red, 10, MBASE(3) - 10, DWIN_Width - 10, MBASE(4));
+    DWIN_Draw_String(false, false, font16x32, Color_Yellow, Color_Bg_Red, ((DWIN_Width) - 8 * 16) / 2, MBASE(3), F("No Media"));
   }
 }
 
@@ -1816,7 +1816,7 @@ void HMI_SDCardUpdate() {
 void Draw_Status_Area(const bool with_update) {
 
   // Clear the bottom area of the screen
-  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, STATUS_Y, DWIN_WIDTH, DWIN_HEIGHT - 1);
+  DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, STATUS_Y, DWIN_Width, DWIN_Height - 1);
 
   //
   // Status Area
@@ -1861,8 +1861,8 @@ void HMI_StartFrame(const bool with_update) {
 inline void Draw_Info_Menu() {
   Clear_Main_Window();
 
-  DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_WIDTH - strlen(MACHINE_SIZE) * MENU_CHR_W) / 2, 122, (char*)MACHINE_SIZE);
-  DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_WIDTH - strlen(SHORT_BUILD_VERSION) * MENU_CHR_W) / 2, 195, (char*)SHORT_BUILD_VERSION);
+  DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_Width - strlen(MACHINE_SIZE) * MENU_CHR_W) / 2, 122, (char*)MACHINE_SIZE);
+  DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_Width - strlen(SHORT_BUILD_VERSION) * MENU_CHR_W) / 2, 195, (char*)SHORT_BUILD_VERSION);
 
   if (HMI_IsChinese()) {
     DWIN_Frame_TitleCopy(1, 30, 17, 57, 29); // "Info"
@@ -1870,7 +1870,7 @@ inline void Draw_Info_Menu() {
     DWIN_Frame_AreaCopy(1, 197, 149, 252, 161, 108, 102);
     DWIN_Frame_AreaCopy(1, 1, 164, 56, 176, 108, 175);
     DWIN_Frame_AreaCopy(1, 58, 164, 113, 176, 105, 248);
-    DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_WIDTH - strlen(CORP_WEBSITE_C) * MENU_CHR_W) / 2, 268, (char*)CORP_WEBSITE_C);
+    DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_Width - strlen(CORP_WEBSITE_C) * MENU_CHR_W) / 2, 268, (char*)CORP_WEBSITE_C);
   }
   else {
     #ifdef USE_STRING_HEADINGS
@@ -1882,7 +1882,7 @@ inline void Draw_Info_Menu() {
     DWIN_Frame_AreaCopy(1, 120, 150, 146, 161, 124, 102);
     DWIN_Frame_AreaCopy(1, 146, 151, 254, 161, 82, 175);
     DWIN_Frame_AreaCopy(1, 0, 165, 94, 175, 89, 248);
-    DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_WIDTH - strlen(CORP_WEBSITE_E) * MENU_CHR_W) / 2, 268, (char*)CORP_WEBSITE_E);
+    DWIN_Draw_String(false, false, font8x16, Color_White, Color_Bg_Black, (DWIN_Width - strlen(CORP_WEBSITE_E) * MENU_CHR_W) / 2, 268, (char*)CORP_WEBSITE_E);
   }
 
   Draw_Back_First();
@@ -3516,7 +3516,7 @@ void EachMomentUpdate() {
       Draw_Print_ProgressBar();
 
       // show print done confirm
-      DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 250, DWIN_WIDTH - 1, STATUS_Y);
+      DWIN_Draw_Rectangle(1, Color_Bg_Black, 0, 250, DWIN_Width - 1, STATUS_Y);
       DWIN_ICON_Show(ICON, HMI_IsChinese() ? ICON_Confirm_C : ICON_Confirm_E, 86, 283);
     }
     else if (HMI_flag.pause_flag != printingIsPaused()) {
@@ -3601,7 +3601,7 @@ void EachMomentUpdate() {
       //
       //(void)recovery.interrupted_file_exists();
       char * const name = card.longest_filename();
-      const int8_t npos = _MAX(0U, DWIN_WIDTH - strlen(name) * (MENU_CHR_W)) / 2;
+      const int8_t npos = _MAX(0U, DWIN_Width - strlen(name) * (MENU_CHR_W)) / 2;
       DWIN_Draw_String(false, true, font8x16, Popup_Text_Color, Color_Bg_Window, npos, 252, name);
       DWIN_UpdateLCD();
 
